@@ -13,28 +13,28 @@
   <!-- PACE Progress Bar START -->
 
   
-  <title>zookeeper的zab协议 | Brave Boy</title>
+  <title>selectsort | Brave Boy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="zookeeper" />
+  <meta name="keywords" content="排序" />
   
   
   
   
-  <meta name="description" content="定义ZAB 协议是为分布式协调服务 ZooKeeper专门设计的一种支持崩溃回复的原子广播协议。 变量概念在了解ZAB协议之前，我们需要先有下面这几个变量的概念： 事务表示：epoch 数据集合：L 主服务：Leader 从服务：Follower 描述ZK主要是依赖ZAB协议来实现分布式数据一致性。我们能够想象为了实现这种分布式的一致性。ZK会如何实现呢？一种主备模式的系统架构，类似于redis的">
-<meta name="keywords" content="zookeeper">
+  <meta name="description" content="选择排序定义选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。关于时间复杂度：最坏时间复杂度‎: ‎О(n²)    平均时间复杂度‎: ‎О(n²)最优时间复杂度‎: ‎О(n²)    空间复杂度‎: ‎О(n) total, O(1) auxiliary">
+<meta name="keywords" content="排序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ZooKeeper的ZAB协议">
-<meta property="og:url" content="http://yoursite.com/2018/07/03/ZooKeeper的ZAB协议/index.html">
+<meta property="og:title" content="SelectSort">
+<meta property="og:url" content="http://yoursite.com/2018/07/04/SelectSort/index.html">
 <meta property="og:site_name" content="Brave Boy">
-<meta property="og:description" content="定义ZAB 协议是为分布式协调服务 ZooKeeper专门设计的一种支持崩溃回复的原子广播协议。 变量概念在了解ZAB协议之前，我们需要先有下面这几个变量的概念： 事务表示：epoch 数据集合：L 主服务：Leader 从服务：Follower 描述ZK主要是依赖ZAB协议来实现分布式数据一致性。我们能够想象为了实现这种分布式的一致性。ZK会如何实现呢？一种主备模式的系统架构，类似于redis的">
+<meta property="og:description" content="选择排序定义选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。关于时间复杂度：最坏时间复杂度‎: ‎О(n²)    平均时间复杂度‎: ‎О(n²)最优时间复杂度‎: ‎О(n²)    空间复杂度‎: ‎О(n) total, O(1) auxiliary">
 <meta property="og:locale" content="cn">
-<meta property="og:image" content="http://yoursite.com/img/zab.png">
-<meta property="og:updated_time" content="2018-07-03T11:01:49.993Z">
+<meta property="og:image" content="http://yoursite.com/img/Selectionsort.png">
+<meta property="og:updated_time" content="2018-07-04T12:24:40.595Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZooKeeper的ZAB协议">
-<meta name="twitter:description" content="定义ZAB 协议是为分布式协调服务 ZooKeeper专门设计的一种支持崩溃回复的原子广播协议。 变量概念在了解ZAB协议之前，我们需要先有下面这几个变量的概念： 事务表示：epoch 数据集合：L 主服务：Leader 从服务：Follower 描述ZK主要是依赖ZAB协议来实现分布式数据一致性。我们能够想象为了实现这种分布式的一致性。ZK会如何实现呢？一种主备模式的系统架构，类似于redis的">
-<meta name="twitter:image" content="http://yoursite.com/img/zab.png">
+<meta name="twitter:title" content="SelectSort">
+<meta name="twitter:description" content="选择排序定义选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。关于时间复杂度：最坏时间复杂度‎: ‎О(n²)    平均时间复杂度‎: ‎О(n²)最优时间复杂度‎: ‎О(n²)    空间复杂度‎: ‎О(n) total, O(1) auxiliary">
+<meta name="twitter:image" content="http://yoursite.com/img/Selectionsort.png">
   
     <link rel="alternate" href="/atom.xml" title="Brave Boy" type="application/atom+xml">
   
@@ -168,14 +168,14 @@ var themeMenus = {};
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-ZooKeeper的ZAB协议" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-SelectSort" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
 <div class="article-gallery">
   <div class="article-gallery-photos">
     
-      <a class="article-gallery-img fancybox" href="/img/zab.png" rel="gallery_cjj73hb0g000510vmutsu94lo">
-        <img src="/img/zab.png" itemprop="image">
+      <a class="article-gallery-img fancybox" href="/img/Selectionsort.png" rel="gallery_cjj73hb09000410vmibnbe64t">
+        <img src="/img/Selectionsort.png" itemprop="image">
       </a>
     
   </div>
@@ -186,7 +186,7 @@ var themeMenus = {};
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      ZooKeeper的ZAB协议
+      SelectSort
     </h1>
   
 
@@ -194,8 +194,8 @@ var themeMenus = {};
     
     <div class="article-meta">
       
-	Posted on <a href="/2018/07/03/ZooKeeper的ZAB协议/" class="article-date">
-	  <time datetime="2018-07-02T17:02:22.000Z" itemprop="datePublished">July 3, 2018</time>
+	Posted on <a href="/2018/07/04/SelectSort/" class="article-date">
+	  <time datetime="2018-07-04T11:04:05.000Z" itemprop="datePublished">July 4, 2018</time>
 	</a>
 
       
@@ -206,43 +206,19 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>ZAB 协议是为分布式协调服务 ZooKeeper专门设计的一种支持崩溃回复的原子广播协议。<br> 变量概念<br>在了解ZAB协议之前，我们需要先有下面这几个变量的概念：</p>
-<pre><code>事务表示：epoch
-数据集合：L
-主服务：Leader
-从服务：Follower
-</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>ZK主要是依赖ZAB协议来实现分布式数据一致性。我们能够想象为了实现这种分布式的一致性。ZK会如何实现呢？一种主备模式的系统架构，类似于redis的主从模式，来保证各个副本之间的一致性。有人会想，既然是主备的模式，是不是又会带来下一个问题，如果主挂了是不是就完蛋了。既然能够作为分布式协调服务的非常重要的服务，那肯定想到了这个问题。ZAB协议有崩溃恢复的机制。这个机制是否和redis的哨兵模式一样，这个我们可以深入的去研究一下。ZAB协议是整个ZooKeeper框架的核心所在，其规定了任何时候都需要保证只有一个主进程负责进行消息广播，而如果遇到主崩溃了，就重新选举出一个新的主进程。</p>
-<a id="more"></a>
-<h3 id="ZAB三阶段"><a href="#ZAB三阶段" class="headerlink" title="ZAB三阶段"></a>ZAB三阶段</h3><p>下面我们从三个阶段来了解ZK的崩溃恢复，同时其中也透漏了ZK的广播等重要的策略。</p>
-<h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><p>发现过程其实就是我们说的Leader选举过程。这个地方可以类比于redis的哨兵模式来学习和研究。<br>首先是投票进行Leader选举，这是个复杂的过程，其中包括sid、事务zxid等进行综合评定来选举出主服务。<br>这时候准Leader就评选出来了。其实过程也比较简单：</p>
-<ol>
-<li>Follow发送自己最后的事务Proposal的epoch给准Leader；</li>
-<li>准Leader根据所有的F的epoch找到最大的然后加1后生成新的epoch’ 然后发送给过半F的epoch；</li>
-<li>Follow得到new的epoch后把这个最新的作为自己的epoch。同时返回准Leader ACK；</li>
+        <h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。<br>关于时间复杂度：<br>最坏时间复杂度‎: ‎О(n²)    平均时间复杂度‎: ‎О(n²)<br>最优时间复杂度‎: ‎О(n²)    空间复杂度‎: ‎О(n) total, O(1) auxiliary<br><a id="more"></a></p>
+<h4 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h4><ol>
+<li>从第i(首次i=0)个元素开始，遍历后面的元素，寻找比自己小的元素放到本次循环的元素的第一个。</li>
+<li>i++， 执行1中的步骤，直到全部数据排序完毕。</li>
 </ol>
-<p>上面这个三个步骤其实都是保证过半Follow来进行的。当Leader L接收到过半的Follower的确认消息ACK之后，Leader L就会从过半的服务器中选举出一个Follow F并使用其作为初始化集合的Ie’。</p>
-<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>所谓同步，那就是同步数据，在完成发现过程，这个过程确定了准Leader和Follow L。那就是要所有集群<br>中的ZK都同步到Follow L中确定的初始化的集合状态。下面是同步的过程：</p>
-<ol>
-<li>准Leader将新的epoch e’和数据集合Ie’使用消息的方式发送给所有的Follow，Follow会在自己的接收队列中接收到消息；</li>
-<li>Follow根据得到的NEWlEADER(e’, le’)，来进行同步操作，根据e’来确定是否进行本轮循环和数据同步，如果不等于e’直接进入下一轮循环，直到到e’和本身的e’相等就进入循环操作，然后进行数据同步；</li>
-<li>一样当过半的Follower针对上面1中发送的消息处理后，会对本次事务执行commit操作，这个操作是commit是向Leader发起的。这时Leader完成第二阶段；</li>
-<li>Leader得到过半的Follower的commit操作之后就会执行提交操作，这样同步操作完成。</li>
-</ol>
-<h3 id="广播"><a href="#广播" class="headerlink" title="广播"></a>广播</h3><p>同步完成之后，这个时候基本所有服务器也就完成数据一致性了。那么这个时候ZAB协议就要开始新的数<br>据广播了。这个时候Leader就会开始接受Follower发送过来的广播请求。然后把该请求广播给所有的Follower。</p>
-<ol>
-<li>准Leader收到客户端新的事务请求后，生成新的事务Proposal，然后根据ZXID的顺序来生成向所有Follower发送的提案<code>&lt;e&#39;, &lt;v,z&gt;&gt;</code>;</li>
-<li>Follower收到新的消息后，根据ZXID的次序依次加到自己的接收队列中，然后反馈给Leader；</li>
-<li>Leader收到过半的Follower的ACK之后，表示广播成功了，这个时候Leader再次发起提交请求给所有的Follower，要求Follower进行事务提交；</li>
-<li>Follower收到Leader的提交命令之后，开始提交自己的事务操作，提交事务前必定确定上一个事务已经提交了的。</li>
-</ol>
-
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[]a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> minIndex=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> temp=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>((a==<span class="keyword">null</span>)||(a.length==<span class="number">0</span>))</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length-<span class="number">1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        minIndex=i;<span class="comment">//无序区的最小数据数组下标</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;a.length;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//在无序区中找到最小数据并保存其数组下标</span></span><br><span class="line">            <span class="keyword">if</span>(a[j]&lt;a[minIndex])</span><br><span class="line">            &#123;</span><br><span class="line">                minIndex=j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将最小元素放到本次循环的前端</span></span><br><span class="line">        temp=a[i];</span><br><span class="line">        a[i]=a[minIndex];</span><br><span class="line">        a[minIndex]=temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="entry-meta entry-footer">
       
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/">zookeeper</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li></ul>
 
       
         <div id="donation_div"></div>
@@ -290,19 +266,10 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2018/07/03/Zookeeper之Session和Http之Session类比学习/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Zookeeper之Session和Http之Session类比学习
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/08/14/【Machine Learning】机器学习：简明入门指南/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/07/04/Quicksort/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">【Machine Learning】机器学习：简明入门指南</div>
+      <div class="article-nav-title">Quicksort</div>
     </a>
   
 </nav>
@@ -316,7 +283,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">2.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZAB三阶段"><span class="nav-number">3.</span> <span class="nav-text">ZAB三阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发现"><span class="nav-number">4.</span> <span class="nav-text">发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">5.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广播"><span class="nav-number">6.</span> <span class="nav-text">广播</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">1.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作步骤"><span class="nav-number">1.2.</span> <span class="nav-text">操作步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li></ol>
     
     </div>
   </aside>
