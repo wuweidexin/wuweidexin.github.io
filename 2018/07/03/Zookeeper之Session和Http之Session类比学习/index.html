@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- PACE Progress Bar START -->
+  
+    <script src="/js/pace.min.js"></script>
+    <link rel="stylesheet" href="https://github.com/HubSpot/pace/raw/master/themes/orange/pace-theme-flash.css">
+  
+  
+
+  <!-- PACE Progress Bar START -->
+
+  
+  <title>zookeeper之session和http之session类比学习 | Brave Boy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="zookeeper" />
+  
+  
+  
+  
+  <meta name="description" content="前言 学习，这里将会把Http中的Session和Zookeeper中的Session放在一起来比较学习，以增强理解。首先是会先讲HttpSession然后再讲Zookeeper的Session。  HttpSession介绍摘自百度：HttpSession是Java平台对session机制的实现规范，本身仅仅是一个接口。具体的实现是由每个web应用服务器的提供商来实现。也就是说我们经常会用到To">
+<meta name="keywords" content="zookeeper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zookeeper之Session和Http之Session类比学习">
+<meta property="og:url" content="http://yoursite.com/2018/07/03/Zookeeper之Session和Http之Session类比学习/index.html">
+<meta property="og:site_name" content="Brave Boy">
+<meta property="og:description" content="前言 学习，这里将会把Http中的Session和Zookeeper中的Session放在一起来比较学习，以增强理解。首先是会先讲HttpSession然后再讲Zookeeper的Session。  HttpSession介绍摘自百度：HttpSession是Java平台对session机制的实现规范，本身仅仅是一个接口。具体的实现是由每个web应用服务器的提供商来实现。也就是说我们经常会用到To">
+<meta property="og:locale" content="cn">
+<meta property="og:image" content="http://yoursite.com/img/zookeeper.png">
+<meta property="og:updated_time" content="2018-07-04T01:55:42.723Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zookeeper之Session和Http之Session类比学习">
+<meta name="twitter:description" content="前言 学习，这里将会把Http中的Session和Zookeeper中的Session放在一起来比较学习，以增强理解。首先是会先讲HttpSession然后再讲Zookeeper的Session。  HttpSession介绍摘自百度：HttpSession是Java平台对session机制的实现规范，本身仅仅是一个接口。具体的实现是由每个web应用服务器的提供商来实现。也就是说我们经常会用到To">
+<meta name="twitter:image" content="http://yoursite.com/img/zookeeper.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Brave Boy" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/my.css">
+  <!-- Google Adsense -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-0123456789ABCDEF",
+          enable_page_level_ads: true
+      });
+  </script>
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/"] = "Home"; 
+
+  themeMenus["/archives"] = "Archives"; 
+
+  themeMenus["/categories"] = "Categories"; 
+
+  themeMenus["/tags"] = "Tags"; 
+
+  themeMenus["/about"] = "About"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Brave Boy" rel="home"> Brave Boy </a>
+            
+          </h1>
+
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="originBgDiv" style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
+
+  </div>
+
+  <script>
+  function setAboutIMG(){
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/' + imgUrls[random];
+      }
+  }
+  bgDiv=document.getElementById("originBgDiv");
+  if(location.pathname.match('about')){
+    setAboutIMG();
+    bgDiv.style.display='block';
+  }else{
+    bgDiv.style.display='none';
+  }
+  </script>
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Zookeeper之Session和Http之Session类比学习" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" href="/img/zookeeper.png" rel="gallery_cjj6h0hnb0004x0vmu7gvmhc1">
+        <img src="/img/zookeeper.png" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Zookeeper之Session和Http之Session类比学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2018/07/03/Zookeeper之Session和Http之Session类比学习/" class="article-date">
+	  <time datetime="2018-07-02T17:27:52.000Z" itemprop="datePublished">July 3, 2018</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>学习，这里将会把Http中的Session和Zookeeper中的Session放在一起来比较学习，以增强理解。首先是会先讲HttpSession然后再讲Zookeeper的Session。</p>
+</blockquote>
+<h2 id="HttpSession"><a href="#HttpSession" class="headerlink" title="HttpSession"></a>HttpSession</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>摘自百度：HttpSession是Java平台对session机制的实现规范，本身仅仅是一个接口。具体的实现是由每个web应用服务器的提供商来实现。也就是说我们经常会用到Tomcat和Jetty还有一些收费的web服务器，他们来根据规范来实现这个接口的功能。下面仅仅从Jetty的HttpSession来说明一下。Http请求是无状态的，因为追求简单的逻辑，就不能满足服务器对一些共享信息和数据的要求。但是Http也提供两种实现该共享数据和信息的方式：</p>
+<ol>
+<li>Cookie：所有共享的数据和信息都使用客户端保存，使用cookie在发送请求的时候发送给服务器。同是服务器也可以通过set-cookie方式设置到客户端上。但是我们很容易可以考虑到，每次都需要发送一些cookie，带宽便被占用，同时cookie本身也是由大小限制的。最重要一点是，有些浏览器基于安全的考虑，是不允许使用cookie的。</li>
+<li>HttpSession：既然在客户端上保存和发送存在比较多的问题，那么可不可以在服务器端来保存这个共享数据呢。答案是可以的，那么HttpSession就来了。服务端Session便是用来保存共享数据的，本身通过一个很重要的属性sessionId来区分。session保存在服务器，那么就不会出现占用带宽和安全问题。但是本身也是优缺点的，那就是集中式的带来的问题。既然全部集中在服务器上，那么服务器就负担大，因为一般情况下，session是存储在内存中的（分布式系统如果做了session共享，可能会存到redis里面），本身如果服务器进程被停止或者重启的时候，内存里面的session就会被清空（分布式也叫单点问题），当然有些收费的服务器也会做得把session保存到硬盘上，总结这个点，那就是无非占用大量内存或者大量的硬盘。增加的程序的处理逻辑。</li>
+</ol>
+<a id="more"></a>
+<h3 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h3><p>在jetty里面，这种服务器信息还包括一下信息，SessionId,CreateTime,LastAccessedTime,MaxInactiveInterval,Attributes信息，我们在经常会在Serlvet的SerlvetContext中来获取Session。jetty使用SessionManager来管理Session。Session可以保存在数据库中，这里使用JDBCSessionManager，当然可以可以保存在内存中HashSessionManager。jetty使用AbstractSessionManager的内部类Session来实现HttpSession接口，并且该实现是线程安全的。下面我们来看主要的方法。</p>
+<ul>
+<li>getCreationTime():获取创建时间</li>
+<li>getId():sessionId，在web应用中唯一标示Session实例，这个有两种ID，分别是：NodeId和ClusterId，而AbstractSessionManager默认是使用ClusterId作为SessionID的。</li>
+<li>getLastAccessedTime()：返回最后一次访问时间戳</li>
+<li>getServletContext():这个是获取上下文，是我们用得最广泛之一。</li>
+<li>setMaxInactiveInterval(int interval)：设置Session的Idle时间，以s为单位。、</li>
+<li>getMaxInactiveInterval()</li>
+<li>getAttribute(String name): 这里设置属性，如果value传入null，那么则移除该属性。否则覆盖。</li>
+<li>getAllAttribute()</li>
+<li>setAttribute(String name, Object value)</li>
+<li>removeAttribute(String name);</li>
+<li>invalidate():Session失效，这个比较厉害，移除所有attribute，并且从SessionManager中移除。</li>
+<li>isNew():可以判断是否使用cookie或者session进行交互。</li>
+</ul>
+<h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><p>HttpSession是Web应用服务几乎不可以缺少的一个重要的元素。它的生命周期伴随着客户端的一次请求的开始到结束，它绑定着需要重要的关联的共享信息，我们经常会把登录用户的各种共享信息放到其中，让每个操作都能够轻松获取到当前的用户信息。当然在分布式系统中，我们可能需要做的更多，微服务下，我们可能需要做到session共享，保证各个微服务之间能够功效session，而不是再做复杂是重新登录的逻辑。这个时候可能就有更多的方案去实现这个session，比如redis保存session实现共享等。</p>
+<h2 id="Zookeeper之Session"><a href="#Zookeeper之Session" class="headerlink" title="Zookeeper之Session"></a>Zookeeper之Session</h2><p>我们讲完HttpSession，终于来到我们的主题Zookeeper中的Session，它又是怎么样的呢？它又有什么特性呢？它和我们前面讲到的HttpSession又有什么区别和类似之处呢？让我们来慢慢接口它神秘的面纱，看看是不是眉清目秀，几分相似呢？</p>
+<h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>Zookeeper中的session是客户端和服务端之间任何交互操作都需要用到的。同样也报存了许多重要的信息，比如临时节点的生命周期，客户端的请求的顺序执行，还有Watcher通知等。是不是感觉和HttpSession有几分相似呢。下面在多讲几个它的特性。</p>
+<h3 id="会话状态"><a href="#会话状态" class="headerlink" title="会话状态"></a>会话状态</h3><p>在HttpSession中，我们可能也有两个状态，失效或者不失效，那么Zookeeper的session呢？</p>
+<ul>
+<li>CONNECTING：连接中</li>
+<li>CONNECTED:已连接</li>
+<li>RECONNECTING:重新连接中</li>
+<li>RECONNECTED:已经重连</li>
+<li>CLOSE:关闭</li>
+</ul>
+<p>是不是感觉有些不一样了，session复杂了很多，但是无不围绕着Zookeeper本身客户端和服务端这种类似CS的交互方式。</p>
+<h3 id="会话创建"><a href="#会话创建" class="headerlink" title="会话创建"></a>会话创建</h3><p>也类似于我们的浏览器向web服务器发送一个请求，建立http连接后创建的session类似，Zookeeper客户端请求连接到Zookeeper服务器后，本身也维护着一个session，这里面也包括了上面我们看到了重要的属性：</p>
+<ul>
+<li>sessionId:会话ID</li>
+<li>TimeOut:会话超时时间</li>
+<li>TickTime:下次会话超时时间点</li>
+<li>isClosing:是否已经被关闭</li>
+</ul>
+<p>每次SessionId都要被拎出来聊聊，其中发挥的重要作用真是不言而喻啊。在Http的session中，sessionId也必须是全局唯一的，但是那只是针对单个web服务器提供的SessionManager管理的session而言，那么对于Zookeeper又是如何呢？Zookeeper作为分布式系统中重要的作为协调分布式服务的重要中间件，它到底又是怎么实现在分布式系统中完成Zookeeper集群的时候session共享的呢?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static long initializeNextSession(long id )&#123;</span><br><span class="line">	long nextSid = 0;</span><br><span class="line">	nextSid = (System.currentTimeMillis() &lt;&lt; 24) &gt;&gt; 8;</span><br><span class="line">	nextSid = nextSid | (id &lt;&lt; 56);</span><br><span class="line">	return nextSid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>书上说这段生产代码有bug。后续版本进行了更正，见下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static long initializeNextSession(long id )&#123;</span><br><span class="line">	long nextSid = 0;</span><br><span class="line">	nextSid = (System.currentTimeMillis() &lt;&lt; 24) &gt;&gt;&gt; 8;</span><br><span class="line">	nextSid = nextSid | (id &lt;&lt; 56);</span><br><span class="line">	return nextSid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Http的Session有SessionManager管理，Zookeeper的Session也是有管理的，这个管理类就是SessionTracker，它也是一个会话管理器，负责Zookeeper服务端的session创建、管理、清理等工作。这里摘自书上《从PAXOS到Zookeeper分布式一致原理》，SessionTracker使用分桶策略，即将类似的session放到一个区块中进行管理，以便于Zookeeper对会话进行不同区块的隔离处理以及同一个区块的管理。</p>
+<h3 id="会话激活"><a href="#会话激活" class="headerlink" title="会话激活"></a>会话激活</h3><p>Zookeeper的客户端和服务端之间会根据我们配置文件中设置的ticket时间来持续的想服务器发送PING请求，保证自己和服务器之间的session不会超时。俗称“心跳检测”。服务根据客户端的不断的PING请求，重新激活对应客户端的session，这个叫TouchSession。看下面流程图：<br><img src="http://img.blog.csdn.net/20170730140354698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbjYxMA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="会话超时检查"><a href="#会话超时检查" class="headerlink" title="会话超时检查"></a>会话超时检查</h3><p>SessionTracker使用一个单独的线程专门进行会话超时检查。这个比较简单不做介绍。</p>
+<h3 id="会话清理"><a href="#会话清理" class="headerlink" title="会话清理"></a>会话清理</h3><p>清理Session我们可以看下面的流程图来进行理解。HttpSession中会话的清理没有Zookeeper的Session清理那么复杂，但是也是脱离不了这样的设计框架。在Zookeeper中更加体现了客户端和服务器之间的连接关系、心跳等。下面看流程图进行理解。<br><img src="http://img.blog.csdn.net/20170730141311535?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbjYxMA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Http的Session和Zookeeper的Session有很多共通之处，但是又各不相同。一个简单些一个更为复杂些。Zookeeper的Session是的客户端和服务端的方式，以及他构建SessionID的方式都是为它能更好的在Zookeeper集群中更好的服务。Zookeeper的Session配合它独一无二的ZNode的特性，将是它在分布式集群中占有更大作用的基本需要的功能。后续将会更加深入了解Zookeeper集群将是怎么使用这些特性进行主备切换，master选举等。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zookeeper/">zookeeper</a></li></ul>
+
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/wuweidexin/wuweidexin.github.io/master/img/weixin.jpg',
+  alipayImage: 'https://raw.githubusercontent.com/wuweidexin/wuweidexin.github.io/master/img/zhifubao.jpg'
+});
+</script>
+      
+            
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/03/ZooKeeper的ZAB协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ZooKeeper的ZAB协议</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HttpSession"><span class="nav-number">2.</span> <span class="nav-text">HttpSession</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要方法"><span class="nav-number">2.2.</span> <span class="nav-text">主要方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#综述"><span class="nav-number">2.3.</span> <span class="nav-text">综述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper之Session"><span class="nav-number">3.</span> <span class="nav-text">Zookeeper之Session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍-1"><span class="nav-number">3.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话状态"><span class="nav-number">3.2.</span> <span class="nav-text">会话状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话创建"><span class="nav-number">3.3.</span> <span class="nav-text">会话创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话激活"><span class="nav-number">3.4.</span> <span class="nav-text">会话激活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话超时检查"><span class="nav-number">3.5.</span> <span class="nav-text">会话超时检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话清理"><span class="nav-number">3.6.</span> <span class="nav-text">会话清理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 Brave Boy All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+
+<!-- Custome JS -->
+<script src="/js/my.js"></script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
